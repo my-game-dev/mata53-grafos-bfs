@@ -152,7 +152,7 @@ public class GridMapHandler : MonoBehaviour {
             startPos = name;
             startX = coordinates.x.ToString();
             startY = coordinates.y.ToString();
-        }        
+        }
     }
 
     public void SetEndingPoint(string name, Vector2Int coordinates) {
