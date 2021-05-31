@@ -27,7 +27,11 @@ public class Node {
 public class GridMapHandler : MonoBehaviour
 {
     string startPos = "(-1, -2)";
+    string startX = "-1";
+    string startY = "-2";
     string endPos = "(5, -2)";
+    string endX = "5";
+    string endY = "-2";
     List<Node> allNodes = new List<Node>();
     Dictionary<(string, string), Node> blaNodes = new Dictionary<(string, string), Node>();
 
@@ -55,6 +59,34 @@ public class GridMapHandler : MonoBehaviour
                 Debug.Log("Neighbors => "+neighbor.Item1+" and "+neighbor.Item2);
             }
         }
+    }
+
+    IEnumerator Search(Dictionary<(string, string), Node> graph, (string, string) start)
+    {
+        var frontier = new Queue<(string, string)>();
+        frontier.Enqueue(start);
+
+        var reached = new HashSet<(string, string)>();
+        reached.Add(start);
+
+        while (frontier.Count > 0)
+        {
+            var current = frontier.Dequeue();
+
+            foreach ((string, string) next in graph[current].getNeighbors()) {
+                if (!reached.Contains(next)) {
+                    frontier.Enqueue(next);
+                    reached.Add(next);
+                    ChangeColor("("+next.Item1+", "+next.Item2+")", Color.blue);
+                    yield return new WaitForSeconds(0.3f);
+                }
+            }
+            
+        }
+    }
+
+    public void StartSearch() {
+        StartCoroutine(Search(blaNodes, (startX, startY)));
     }
 
     public void SetCurrentAction(int index) {
