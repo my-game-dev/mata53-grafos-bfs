@@ -44,8 +44,10 @@ public class GridMapHandler : MonoBehaviour {
     public Color redTile;
     public Color pinkTile;
     public Color blueTile;
+    private bool coroutineRunning = false;
 
     void Start() {
+        coroutineRunning = false;
         speed = 1f;
         for(int x = -5; x <= 8; x++) {
             for(int y = -8; y <= 5; y++) {
@@ -60,11 +62,24 @@ public class GridMapHandler : MonoBehaviour {
         search = Search(nodes, (startX, startY), (endX, endY));
     }
 
+    private void resetNodes() {
+        foreach(KeyValuePair<(string, string), Node> node in nodes) {
+            var pos = "("+node.Key.Item1.ToString()+", "+node.Key.Item2.ToString()+")";
+            if(pos != startPos && pos != endPos) {
+                ChangeColor(pos, whiteTile);
+            }
+            if(pos == endPos) {
+                ChangeColor(pos, redTile);
+            }
+        }
+    }
+
     IEnumerator Search(
         Dictionary<(string, string), Node> graph,
         (string, string) start,
         (string, string) goal
     ) {
+        coroutineRunning = true;
         var frontier = new Queue<(string, string)>();
         frontier.Enqueue(start);
 
@@ -90,6 +105,7 @@ public class GridMapHandler : MonoBehaviour {
                 }
             }
         }
+        coroutineRunning = false;
     }
 
     public void OnStartSearchClick() {
@@ -100,13 +116,12 @@ public class GridMapHandler : MonoBehaviour {
 
     public void OnStopClick() {
         StopCoroutine(search);
+        coroutineRunning = false;
     }
 
     public void OnClearClick() {
         OnStopClick();
-        foreach(KeyValuePair<(string, string), Node> node in nodes) {
-            ChangeColor("("+node.Key.Item1+", "+node.Key.Item2+")", whiteTile);
-        }
+        resetNodes();
         SetStartingPoint(startPos, new Vector2Int(Int32.Parse(startX), Int32.Parse(startY)));
         SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
     }
@@ -128,23 +143,29 @@ public class GridMapHandler : MonoBehaviour {
     }
 
     public void SetStartingPoint(string name, Vector2Int coordinates) {
-        if(startPos != name && startPos != "") {
-            ChangeColor(startPos, whiteTile);
-        }
-        ChangeColor(name, greenTile);
-        startPos = name;
-        startX = coordinates.x.ToString();
-        startY = coordinates.y.ToString();
+        if(name != endPos && coroutineRunning == false) {
+            resetNodes();
+            if(startPos != name && startPos != "") {
+                ChangeColor(startPos, whiteTile);
+            }
+            ChangeColor(name, greenTile);
+            startPos = name;
+            startX = coordinates.x.ToString();
+            startY = coordinates.y.ToString();
+        }        
     }
 
-     public void SetEndingPoint(string name, Vector2Int coordinates) {
-        if(endPos != name && endPos != "") {
-            ChangeColor(endPos, whiteTile);
+    public void SetEndingPoint(string name, Vector2Int coordinates) {
+        if(name != startPos && coroutineRunning == false) {
+            resetNodes();
+            if(endPos != name && endPos != "") {
+                ChangeColor(endPos, whiteTile);
+            }
+            ChangeColor(name, redTile);
+            endPos = name;
+            endX = coordinates.x.ToString();
+            endY = coordinates.y.ToString();
         }
-        ChangeColor(name, redTile);
-        endPos = name;
-        endX = coordinates.x.ToString();
-        endY = coordinates.y.ToString();
     }
 
     public void ChangeColor(string pos, Color color) {

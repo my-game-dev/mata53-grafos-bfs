@@ -543,18 +543,6 @@ PrefabInstance:
       propertyPath: slider
       value: 
       objectReference: {fileID: 648163049}
-    - target: {fileID: 1722975624619135313, guid: 18f2fc4dae4a0b240a69077535fbd09c, type: 3}
-      propertyPath: blueTile.b
-      value: 0.6132076
-      objectReference: {fileID: 0}
-    - target: {fileID: 1722975624619135313, guid: 18f2fc4dae4a0b240a69077535fbd09c, type: 3}
-      propertyPath: blueTile.g
-      value: 0.17000988
-      objectReference: {fileID: 0}
-    - target: {fileID: 1722975624619135313, guid: 18f2fc4dae4a0b240a69077535fbd09c, type: 3}
-      propertyPath: blueTile.r
-      value: 0.008098936
-      objectReference: {fileID: 0}
     - target: {fileID: 5310053358482958762, guid: 18f2fc4dae4a0b240a69077535fbd09c, type: 3}
       propertyPath: m_RootOrder
       value: 2
