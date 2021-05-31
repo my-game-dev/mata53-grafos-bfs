@@ -9,10 +9,11 @@ public class PaintController : MonoBehaviour
     
     private void OnMouseDown() {
         parentScript = transform.parent.parent.GetComponent<GridMapHandler>();
+        Vector2Int coordinates = transform.parent.Find("Position").GetComponent<CoordinateLabeler>().coordinates;
         if (parentScript.currentAction == Color.green) {
-            parentScript.SetStartingPoint(transform.parent.name);
+            parentScript.SetStartingPoint(transform.parent.name, coordinates);
         } else if (parentScript.currentAction == Color.red) {
-            parentScript.SetEndingPoint(transform.parent.name);
+            parentScript.SetEndingPoint(transform.parent.name, coordinates);
         }
     }
 }

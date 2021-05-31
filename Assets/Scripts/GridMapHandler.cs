@@ -32,44 +32,42 @@ public class GridMapHandler : MonoBehaviour
     string endPos = "(5, -2)";
     string endX = "5";
     string endY = "-2";
-    List<Node> allNodes = new List<Node>();
-    Dictionary<(string, string), Node> blaNodes = new Dictionary<(string, string), Node>();
+    Dictionary<(string, string), Node> nodes = new Dictionary<(string, string), Node>();
+    IEnumerator search;
 
     public Color currentAction;
 
     void Start() {
         for(int x = -5; x <= 8; x++) {
             for(int y = -8; y <= 5; y++) {
-                //allNodes.Add(new Node(x.ToString(), y.ToString()));
-                blaNodes[(x.ToString(), y.ToString())] = new Node(x.ToString(), y.ToString());
+                nodes[(x.ToString(), y.ToString())] = new Node(x.ToString(), y.ToString());
             }
         }
         currentAction = Color.green;
-        SetStartingPoint(startPos);
-        SetEndingPoint(endPos);
-        /*foreach(Node node in allNodes) {
-            Debug.Log("X => "+ node.x+" Y => "+node.y);
-            foreach((string, string) neighbor in node.getNeighbors()) {
-                Debug.Log("Neighbors => "+neighbor.Item1+" and "+neighbor.Item2);
-            }
-        }*/
-        foreach(KeyValuePair<(string, string), Node> node in blaNodes) {
+        SetStartingPoint(startPos, new Vector2Int(Int32.Parse(startX), Int32.Parse(startY)));
+        SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
+        search = Search(nodes, (startX, startY), (endX, endY));
+        /*foreach(KeyValuePair<(string, string), Node> node in nodes) {
             Debug.Log("X => "+ node.Value.x+" Y => "+node.Value.y);
             foreach((string, string) neighbor in node.Value.getNeighbors()) {
                 Debug.Log("Neighbors => "+neighbor.Item1+" and "+neighbor.Item2);
             }
-        }
+        }*/
     }
 
-    IEnumerator Search(Dictionary<(string, string), Node> graph, (string, string) start)
-    {
+    IEnumerator Search(
+        Dictionary<(string, string), Node> graph,
+        (string, string) start,
+        (string, string) goal
+    ) {
         var frontier = new Queue<(string, string)>();
         frontier.Enqueue(start);
 
         var reached = new HashSet<(string, string)>();
         reached.Add(start);
+        var flag = 0;
 
-        while (frontier.Count > 0)
+        while (frontier.Count > 0 && flag == 0)
         {
             var current = frontier.Dequeue();
 
@@ -77,16 +75,37 @@ public class GridMapHandler : MonoBehaviour
                 if (!reached.Contains(next)) {
                     frontier.Enqueue(next);
                     reached.Add(next);
+                    if(next == goal) {
+                        ChangeColor("("+next.Item1+", "+next.Item2+")", Color.magenta);
+                        flag = 1;
+                        break;
+                    }
                     ChangeColor("("+next.Item1+", "+next.Item2+")", Color.blue);
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
             
         }
     }
 
-    public void StartSearch() {
-        StartCoroutine(Search(blaNodes, (startX, startY)));
+    public void OnStartSearchClick() {
+        OnClearClick();
+        search = Search(nodes, (startX, startY), (endX, endY));
+        StartCoroutine(search);
+    }
+
+    public void OnStopClick() {
+        Debug.Log("Hello");
+        StopCoroutine(search);
+    }
+
+    public void OnClearClick() {
+        OnStopClick();
+        foreach(KeyValuePair<(string, string), Node> node in nodes) {
+            ChangeColor("("+node.Key.Item1+", "+node.Key.Item2+")", Color.white);
+        }
+        SetStartingPoint(startPos, new Vector2Int(Int32.Parse(startX), Int32.Parse(startY)));
+        SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
     }
 
     public void SetCurrentAction(int index) {
@@ -100,20 +119,24 @@ public class GridMapHandler : MonoBehaviour
                 break;
         }
     }
-    public void SetStartingPoint(string name) {
+    public void SetStartingPoint(string name, Vector2Int coordinates) {
         if(startPos != name && startPos != "") {
             ChangeColor(startPos, Color.white);
         }
         ChangeColor(name, Color.green);
         startPos = name;
+        startX = coordinates.x.ToString();
+        startY = coordinates.y.ToString();
     }
 
-     public void SetEndingPoint(string name) {
+     public void SetEndingPoint(string name, Vector2Int coordinates) {
         if(endPos != name && endPos != "") {
             ChangeColor(endPos, Color.white);
         }
         ChangeColor(name, Color.red);
         endPos = name;
+        endX = coordinates.x.ToString();
+        endY = coordinates.y.ToString();
     }
 
     public void ChangeColor(string pos, Color color) {

@@ -8,7 +8,7 @@ using UnityEditor;
 public class CoordinateLabeler : MonoBehaviour
 {
     TextMeshPro label;
-    Vector2Int coordinates = new Vector2Int();
+    public Vector2Int coordinates = new Vector2Int();
 
     void Awake() {
         label = GetComponent<TextMeshPro>();
@@ -26,7 +26,8 @@ public class CoordinateLabeler : MonoBehaviour
     void DisplayCoordinates() {
         coordinates.x = Mathf.RoundToInt(transform.parent.position.x / 10);
         coordinates.y = Mathf.RoundToInt(transform.parent.position.y / 10);
-        label.text = coordinates.x + "," + coordinates.y;
+        //label.text = coordinates.x + "," + coordinates.y;
+        label.text = "";
     }
 
     void UpdateObjectName() {
