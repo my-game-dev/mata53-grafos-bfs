@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class Node {
     public string x;
     public string y;
@@ -24,8 +26,8 @@ public class Node {
         return Int32.Parse(val);
     }
 }
-public class GridMapHandler : MonoBehaviour
-{
+
+public class GridMapHandler : MonoBehaviour {
     string startPos = "(-1, -2)";
     string startX = "-1";
     string startY = "-2";
@@ -34,25 +36,28 @@ public class GridMapHandler : MonoBehaviour
     string endY = "-2";
     Dictionary<(string, string), Node> nodes = new Dictionary<(string, string), Node>();
     IEnumerator search;
-
+    public float speed = 1f;
+    public Slider slider;
     public Color currentAction;
+    public Color greenTile;
+    public Color whiteTile;
+    public Color redTile;
+    public Color pinkTile;
+    public Color blueTile;
 
     void Start() {
+        speed = 1f;
         for(int x = -5; x <= 8; x++) {
             for(int y = -8; y <= 5; y++) {
                 nodes[(x.ToString(), y.ToString())] = new Node(x.ToString(), y.ToString());
+                ChangeColor("("+x.ToString()+", "+y.ToString()+")", whiteTile);
             }
         }
-        currentAction = Color.green;
+        slider.onValueChanged.AddListener(delegate { OnSpeedChange(); });
+        currentAction = greenTile;
         SetStartingPoint(startPos, new Vector2Int(Int32.Parse(startX), Int32.Parse(startY)));
         SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
         search = Search(nodes, (startX, startY), (endX, endY));
-        /*foreach(KeyValuePair<(string, string), Node> node in nodes) {
-            Debug.Log("X => "+ node.Value.x+" Y => "+node.Value.y);
-            foreach((string, string) neighbor in node.Value.getNeighbors()) {
-                Debug.Log("Neighbors => "+neighbor.Item1+" and "+neighbor.Item2);
-            }
-        }*/
     }
 
     IEnumerator Search(
@@ -76,15 +81,14 @@ public class GridMapHandler : MonoBehaviour
                     frontier.Enqueue(next);
                     reached.Add(next);
                     if(next == goal) {
-                        ChangeColor("("+next.Item1+", "+next.Item2+")", Color.magenta);
+                        ChangeColor("("+next.Item1+", "+next.Item2+")", pinkTile);
                         flag = 1;
                         break;
                     }
-                    ChangeColor("("+next.Item1+", "+next.Item2+")", Color.blue);
-                    yield return new WaitForSeconds(0.2f);
+                    ChangeColor("("+next.Item1+", "+next.Item2+")", blueTile);
+                    yield return new WaitForSeconds(0.2f * speed);
                 }
             }
-            
         }
     }
 
@@ -95,35 +99,39 @@ public class GridMapHandler : MonoBehaviour
     }
 
     public void OnStopClick() {
-        Debug.Log("Hello");
         StopCoroutine(search);
     }
 
     public void OnClearClick() {
         OnStopClick();
         foreach(KeyValuePair<(string, string), Node> node in nodes) {
-            ChangeColor("("+node.Key.Item1+", "+node.Key.Item2+")", Color.white);
+            ChangeColor("("+node.Key.Item1+", "+node.Key.Item2+")", whiteTile);
         }
         SetStartingPoint(startPos, new Vector2Int(Int32.Parse(startX), Int32.Parse(startY)));
         SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
     }
 
+    public void OnSpeedChange() {
+        int factor = (int)Math.Pow(2,slider.value-1);
+        this.speed = 0.25f * factor;
+    }
+
     public void SetCurrentAction(int index) {
-        Debug.Log("Eita: "+index.ToString());
         switch(index) {
             case 0:
-                this.currentAction = Color.green;
+                this.currentAction = greenTile;
                 break;
             case 1:
-                this.currentAction = Color.red;
+                this.currentAction = redTile;
                 break;
         }
     }
+
     public void SetStartingPoint(string name, Vector2Int coordinates) {
         if(startPos != name && startPos != "") {
-            ChangeColor(startPos, Color.white);
+            ChangeColor(startPos, whiteTile);
         }
-        ChangeColor(name, Color.green);
+        ChangeColor(name, greenTile);
         startPos = name;
         startX = coordinates.x.ToString();
         startY = coordinates.y.ToString();
@@ -131,9 +139,9 @@ public class GridMapHandler : MonoBehaviour
 
      public void SetEndingPoint(string name, Vector2Int coordinates) {
         if(endPos != name && endPos != "") {
-            ChangeColor(endPos, Color.white);
+            ChangeColor(endPos, whiteTile);
         }
-        ChangeColor(name, Color.red);
+        ChangeColor(name, redTile);
         endPos = name;
         endX = coordinates.x.ToString();
         endY = coordinates.y.ToString();
