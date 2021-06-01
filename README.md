@@ -1,16 +1,16 @@
 # Breadth First Search Algorithm
-## Acesso
+## 🖱️ Acesso
 Para utilizar a aplicação, [clique aqui](https://my-ufba-projects.github.io/mata53-grafos-bfs).
 
-## Apresentação
+## ✏️ Apresentação
 Aplicação desenvolvida por [Danilo Peleteiro](https://www.linkedin.com/in/danilo-peleteiro-ufba/) no contexto da disciplina *MATA53 - Teoria dos Grafos*, ministrada pelo Prof. [Tiago Januário](https://www.linkedin.com/in/januarioccp/) através do curso de Ciência da Computação na Universidade Federal da Bahia (UFBA) - 2021.1.
 
 Nº de Matrícula: 217115466
 
-## Descrição
+## 📃 Descrição
 Foi desenvolvida uma aplicação que representa visualmente o comportamento do [Breadth First Search](https://pt.wikipedia.org/wiki/Busca_em_largura) (BFS) Algorithm, conhecido em português como o Algoritmo da Busca em Largura.
 
-## Tecnologias
+## 💻 Tecnologias
 Foram utilizadas as seguintes tecnologias para o desenvolvimento:
 - Unity Engine
 - C#
@@ -40,6 +40,6 @@ GridMapHandler.cs
 PaintController.cs
 ```
 
-## Guia
+## 🦮 Guia
 
 
