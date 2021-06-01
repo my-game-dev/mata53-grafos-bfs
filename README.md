@@ -41,5 +41,31 @@ PaintController.cs
 ```
 
 ## 🦮 Guia
+O usuário poderá realizar 5 Ações distintas durante o uso da aplicação:
+- Selecionar os pontos de Início e Chegada;
+- Iniciar a execução do Algoritmo;
+- Interromper a execução do Algoritmo;
+- Limpar resquícios de execução anterior do Algoritmo no mapa;
+- Alterar velocidade de execução das etapas do Algoritmo.
 
+### Selecionar Pontos de Início e Chegada
+Há um `Dropdown` onde o usuário poderá escolher qual ponto será definido (Início ou Chegada). Após realizar a escolha de qual ponto será alterado, o usuário poderá clicar em qualquer lugar no mapa para definir o novo local de onde o Algoritmo iniciará/encerrará sua execução.
 
+### Iniciar a Execução do Algoritmo
+Há um `Botão` chamado `Start`, que dá início à execução do Algoritmo, saindo do Ponto de Início (Verde), até o Ponto de Chegada (Vermelho).
+
+### Interromper a execução do Algoritmo
+Há um `Botão` chamado `Stop`, que interrompe a execução do Algoritmo.
+
+### Limpar Resquícios de Execução
+Há um `Botão` chamado `Clear`, que limpa todo o caminho (Azul) anterior realizado pelo Algoritmo.
+
+### Alterar Velocidade de Execução
+Há um `Slider` chamado `Speed`, que o usuário poderá interagir para diminuir/aumentar a velocidade de execução dos passos do Algoritmo.
+
+## Informações Pertinentes ao Algoritmo
+Optou-se, para este Algoritmo BFS, utilizar apenas vizinhos e movimentos realizados nos sentidos Horizontal e Vertical.
+
+## Saiba mais sobre a Busca em Largura
+- [Busca em Largura - USP](https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/bfs.html)
+- [Busca em Largura - Wikipedia](https://pt.wikipedia.org/wiki/Busca_em_largura)
