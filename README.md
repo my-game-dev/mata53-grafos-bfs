@@ -63,9 +63,9 @@ Há um `Botão` chamado `Clear`, que limpa todo o caminho (Azul) anterior realiz
 ### Alterar Velocidade de Execução
 Há um `Slider` chamado `Speed`, que o usuário poderá interagir para diminuir/aumentar a velocidade de execução dos passos do Algoritmo.
 
-## Informações Pertinentes ao Algoritmo
+## ℹ️ Informações Pertinentes ao Algoritmo
 Optou-se, para este Algoritmo BFS, utilizar apenas vizinhos e movimentos realizados nos sentidos Horizontal e Vertical.
 
-## Saiba mais sobre a Busca em Largura
+## 📚 Saiba mais sobre a Busca em Largura
 - [Busca em Largura - USP](https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/bfs.html)
 - [Busca em Largura - Wikipedia](https://pt.wikipedia.org/wiki/Busca_em_largura)
