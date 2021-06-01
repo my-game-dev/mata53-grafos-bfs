@@ -1,7 +1,9 @@
 # Breadth First Search Algorithm
 ## 🖱️ Acesso
 Para utilizar a aplicação, [clique aqui](https://my-ufba-projects.github.io/mata53-grafos-bfs).
-Para assistir ao vídeo descritivo, [clique aqui](https://youtu.be/jp16NbWs4os)
+\
+\
+Para assistir ao vídeo descritivo no YouTube, [clique aqui](https://youtu.be/jp16NbWs4os)
 
 ## ✏️ Apresentação
 Aplicação desenvolvida por [Danilo de Andrade Peleteiro](https://www.linkedin.com/in/danilo-peleteiro-ufba/) no contexto da disciplina *MATA53 - Teoria dos Grafos*, ministrada pelo Prof. [Tiago Januário](https://www.linkedin.com/in/januarioccp/) através do curso de Ciência da Computação na Universidade Federal da Bahia (UFBA) - 2021.1.
