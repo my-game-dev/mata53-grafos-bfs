@@ -9,11 +9,13 @@ public class Node {
     public string y;
     List<(string, string)> neighbors = new List<(string, string)>();
 
+    // Construtor do Nó
     public Node(string x, string y) {
         this.x = x;
         this.y = y;
     }
 
+    // Retorna os Vizinhos do Nó
     public List<(string, string)> getNeighbors() {
         if(ToInt(x) < 8) neighbors.Add(((ToInt(x)+1).ToString(), y));
         if(ToInt(x) > -5) neighbors.Add(((ToInt(x)-1).ToString(), y));
@@ -46,6 +48,8 @@ public class GridMapHandler : MonoBehaviour {
     public Color blueTile;
     private bool coroutineRunning = false;
 
+    // Executado no início da Aplicação. Cria a Grid e os Nós.
+    // Determina posições inicias para o ponto de início e chegada.
     void Start() {
         coroutineRunning = false;
         speed = 1f;
@@ -62,6 +66,7 @@ public class GridMapHandler : MonoBehaviour {
         search = Search(nodes, (startX, startY), (endX, endY));
     }
 
+    // Reseta todo o caminho percorrido
     private void resetNodes() {
         foreach(KeyValuePair<(string, string), Node> node in nodes) {
             var pos = "("+node.Key.Item1.ToString()+", "+node.Key.Item2.ToString()+")";
@@ -74,6 +79,7 @@ public class GridMapHandler : MonoBehaviour {
         }
     }
 
+    // Execução da BFS
     IEnumerator Search(
         Dictionary<(string, string), Node> graph,
         (string, string) start,
@@ -108,17 +114,20 @@ public class GridMapHandler : MonoBehaviour {
         coroutineRunning = false;
     }
 
+    // Inicia a BFS após clique no Botão correspondente
     public void OnStartSearchClick() {
         OnClearClick();
         search = Search(nodes, (startX, startY), (endX, endY));
         StartCoroutine(search);
     }
 
+    // Interrompe a execução após clique no Botão correspondente
     public void OnStopClick() {
         StopCoroutine(search);
         coroutineRunning = false;
     }
 
+    // Limpa todo o caminho percorrido durante a última execução do Algoritmo
     public void OnClearClick() {
         OnStopClick();
         resetNodes();
@@ -126,11 +135,13 @@ public class GridMapHandler : MonoBehaviour {
         SetEndingPoint(endPos, new Vector2Int(Int32.Parse(endX), Int32.Parse(endY)));
     }
 
+    // Altera a velocidade de execução do Algoritmo a partir da mudança do usuário através do Slider
     public void OnSpeedChange() {
         int factor = (int)Math.Pow(2,slider.value-1);
         this.speed = 0.25f * factor;
     }
 
+    // Altera a ação do clique do Mouse a partir da seleção do Usuário no Dropdown (Início/Chegada)
     public void SetCurrentAction(int index) {
         switch(index) {
             case 0:
@@ -142,6 +153,7 @@ public class GridMapHandler : MonoBehaviour {
         }
     }
 
+    // Determina o Ponto de Início
     public void SetStartingPoint(string name, Vector2Int coordinates) {
         if(name != endPos && coroutineRunning == false) {
             resetNodes();
@@ -155,6 +167,7 @@ public class GridMapHandler : MonoBehaviour {
         }
     }
 
+    // Determina o Ponto de Chegada
     public void SetEndingPoint(string name, Vector2Int coordinates) {
         if(name != startPos && coroutineRunning == false) {
             resetNodes();
@@ -168,6 +181,7 @@ public class GridMapHandler : MonoBehaviour {
         }
     }
 
+    // Altera Cor de dado elemento da Grid
     public void ChangeColor(string pos, Color color) {
         var child = transform.Find(pos);
         var childMesh = child.transform.Find("Quad").gameObject.GetComponent<MeshRenderer>();

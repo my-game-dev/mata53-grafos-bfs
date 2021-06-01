@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+// Classe Responsável por Criar as Coordenadas de cada elemento da Grid
 [ExecuteAlways]
 public class CoordinateLabeler : MonoBehaviour {
     TextMeshPro label;
