@@ -3,7 +3,7 @@
 Para utilizar a aplicação, [clique aqui](https://my-ufba-projects.github.io/mata53-grafos-bfs).
 
 ## ✏️ Apresentação
-Aplicação desenvolvida por [Danilo Peleteiro](https://www.linkedin.com/in/danilo-peleteiro-ufba/) no contexto da disciplina *MATA53 - Teoria dos Grafos*, ministrada pelo Prof. [Tiago Januário](https://www.linkedin.com/in/januarioccp/) através do curso de Ciência da Computação na Universidade Federal da Bahia (UFBA) - 2021.1.
+Aplicação desenvolvida por [Danilo de Andrade Peleteiro](https://www.linkedin.com/in/danilo-peleteiro-ufba/) no contexto da disciplina *MATA53 - Teoria dos Grafos*, ministrada pelo Prof. [Tiago Januário](https://www.linkedin.com/in/januarioccp/) através do curso de Ciência da Computação na Universidade Federal da Bahia (UFBA) - 2021.1.
 
 Nº de Matrícula: 217115466
 
