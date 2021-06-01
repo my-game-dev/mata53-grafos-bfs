@@ -63,6 +63,11 @@ Há um `Botão` chamado `Clear`, que limpa todo o caminho (Azul) anterior realiz
 ### Alterar Velocidade de Execução
 Há um `Slider` chamado `Speed`, que o usuário poderá interagir para diminuir/aumentar a velocidade de execução dos passos do Algoritmo.
 
+
+## 📹 Funcionamento
+![iDD8RPsf3I](https://user-images.githubusercontent.com/36287131/120257353-788ea880-c266-11eb-8a05-00b188d47b8d.gif)
+
+
 ## ℹ️ Informações Pertinentes ao Algoritmo
 Optou-se, para este Algoritmo BFS, utilizar apenas vizinhos e movimentos realizados nos sentidos Horizontal e Vertical.
 
